@@ -52,32 +52,24 @@ module.exports = {
         } 
     },
 
-    async patch(req, res) {
-        const { spotid, company, address, techs, price } = req.body;
-
-        await Spot.findByIdAndUpdate(spotid, { 
-            $set: {
-            address: address,
-            company: company,
-            techs: techs.split(',').map(tech => tech.trim()),
-            price: price,
-            }
-        }, function(error, result) {
-            if(error){
-                console.log(error);
-            }
-            console.log('Result: ' + result);
-            res.send('Atualizado');
-        })
-    },
-
-    
-    async patchImg(req, res) {
+    async update(req, res) {
         const { filename } = req.file;
-        const { spotid } = req.body;
+        const { company, address, techs, price } = req.body;
+        const { user_id } = req.headers;
+        const { spot_id } = req.params;
 
-        await Spot.findByIdAndUpdate(spotid, { 
+        const user = await User.findById(user_id);
+
+        if(!user){
+            return res.status(400).json({ error: 'User does not exists' });
+        }
+
+        await Spot.findByIdAndUpdate({ _id : spot_id }, { 
             $set: {
+            address,
+            company,
+            techs: techs.split(',').map(tech => tech.trim()),
+            price,
             thumbnail: filename,
             }
         }, function(error, result) {

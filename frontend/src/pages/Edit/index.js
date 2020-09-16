@@ -5,7 +5,6 @@ import api from '../../services/api';
 import camera from '../../assets/camera.svg';
 
 import './styles.css';
-import { render } from '@testing-library/react';
 
 export default function Edit({ history }) {
     const [company, setCompany] = useState('');
@@ -13,79 +12,69 @@ export default function Edit({ history }) {
     const [techs, setTechs] = useState('');
     const [price, setPrice] = useState('');
     const [thumbnail, setThumbnail] = useState(null);
-    const [previewThumbnail, setPreviewThumbnail] = useState(null);
-    const { id } = useParams();
-    const [changeImage, setChangeImage] = useState(false);
+    const { spotId } = useParams();
+    const [thumbnailurl, setThumbnailurl] = useState('');
 
     const preview = useMemo(() => {
+        if(thumbnailurl && !thumbnail){
+            return thumbnailurl;
+        }
         return thumbnail ? URL.createObjectURL(thumbnail) : null;
-    }, [thumbnail]);
-
-    function handleChangeImage(i) {
-        setChangeImage(i);
-    };
+    }, [thumbnail, thumbnailurl])
 
     useEffect(() => {
-        async function loadSpot(id) {
-            const response = await api.get('/spots/' + id, {});
-            setCompany(response.data.company);
-            setAddress(response.data.address);
-            setTechs(response.data.techs);
-            setPrice(response.data.price);
-            setThumbnail(response.thumbnail);
-            setPreviewThumbnail(response.data.thumbnail_url);
-            console.log(response.data);
+        const  loadSpots = async () =>   {
+            try {
+                const res = await api.get('/spots/' + spotId, {});
+                const data = res.data;
+    
+                setCompany(data.company);
+                setAddress(data.address);
+                setTechs(data.techs);
+                setPrice(data.price);
+                setThumbnailurl(data.thumbnail_url);
+    
+            } catch(e) {
+                console.error(e);
+            }
         }
 
-        loadSpot(id);
+        loadSpots();
         //array vazio indica que só irá fazer a busca uma vez 
     }, []);
 
     async function handleSubmit(event){
         event.preventDefault();
-
+        
+        const user_id = localStorage.getItem('user');
         const data = new FormData();
-        const spot_id = id;
+        const spot_id = spotId;
 
-        if(!thumbnail) {
+        if(thumbnail) {
             data.append('thumbnail', thumbnail);
         };
         data.append('company', company);
         data.append('address', address);
         data.append('techs', techs);
         data.append('price', price);
-        data.append('spotid', spot_id);
 
-        await api.patch('/spots/', data, {});
+        await api.patch('/spots/' + spot_id, data, {
+            headers: { user_id }
+        });
 
         history.push('/dashboard');
     }
 
-    function Image() { 
-        const change = changeImage;
- 
-        if (change) {
-            return <div><label 
-            id="thumbnail" 
-            style={{ backgroundImage: `url(${preview})` }}
-            className={thumbnail ? 'has-thumbnail' : ''}
-            >
-            <input type="file" onChange={event => setThumbnail(event.target.files[0])}/>
-            <img src={camera} alt="Select img"/>
-            </label>
-            <button onClick={() => handleChangeImage(false)}>Cancelar edição</button>
-            </div>;
-        } else {
-            return <div><img src={`${previewThumbnail}`} />
-            <button onClick={() => handleChangeImage(true)}>Editar imagem</button>
-            </div>
-        }
-    }
-
-
     return (
         <form onSubmit={handleSubmit}>
-            <Image />
+            <label 
+                id="thumbnail" 
+                style={{ backgroundImage: `url(${preview})` }}
+                className={thumbnail ? 'has-thumbnail' : ''}
+            >
+                <input type="file" onChange={event => setThumbnail(event.target.files[0])}/>
+                <img src={camera} alt="Select img"/>
+            </label>
             <label htmlFor="company">EMPRESA *</label>
             <input
                 id="company"

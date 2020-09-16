@@ -18,8 +18,7 @@ routes.get('/spots', SpotController.index);
 routes.get('/spots/:spot_id', SpotController.getId);
 routes.post('/spots', upload.single('thumbnail'), SpotController.store);
 routes.delete('/spots/:spot_id', SpotController.delete);
-routes.patch('/spots/', SpotController.patch);
-routes.patch('/spots/', upload.single('thumbnail'), SpotController.patchImg);
+routes.patch('/spots/:spot_id', upload.single('thumbnail'), SpotController.update);
 
 routes.get('/dashboard', DashboardController.show);
 

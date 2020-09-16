@@ -16,8 +16,7 @@ export default function Routes() {
                 <Route path="/dashboard" component={Dashboard} />
                 <Route path="/new" component={New} />
                 <Route path="/bookings" component={New} />
-                <Route path="/spot/edit/:id" component={Edit} />
-                <Route path="/spot/edit-image/:id" component={EditImg} />
+                <Route path="/spot/edit/:spotId" component={Edit} />
             </Switch>
         </BrowserRouter>
     );
