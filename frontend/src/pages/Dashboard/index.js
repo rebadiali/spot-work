@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import socketio from 'socket.io-client';
 import api from '../../services/api';
 
+import back from '../../assets/back.png';
 import './styles.css';
 
 export default function Dashboard() {
@@ -88,9 +89,7 @@ export default function Dashboard() {
                 <span className='dashbtn'> Verificar reservas </span>
             </Link>
 
-            <Link to='/'>
-                <span className='exitbtn'> Sair </span>
-            </Link>
+            <a href="/"><img src={back} title="Sair" alt="sair" /></a>
         </>
     ) 
 }

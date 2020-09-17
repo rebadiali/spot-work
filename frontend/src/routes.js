@@ -5,8 +5,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import New from './pages/New';
 import Edit from './pages/Edit';
-import EditImg from './pages/EditImg';
-//import Bookings from './pages/Bookings';
+import Bookings from './pages/Bookings';
 
 export default function Routes() {
     return (
@@ -15,7 +14,7 @@ export default function Routes() {
                 <Route path="/" exact component={Login} />
                 <Route path="/dashboard" component={Dashboard} />
                 <Route path="/new" component={New} />
-                <Route path="/bookings" component={New} />
+                <Route path="/bookings" component={Bookings} />
                 <Route path="/spot/edit/:spotId" component={Edit} />
             </Switch>
         </BrowserRouter>

@@ -28,7 +28,7 @@ module.exports = {
     async show(req, res){
         const { user_id } = req.headers;
 
-        const bookings = await Booking.find({ user: user_id });
+        const bookings = await Booking.find().populate({path:'spot',match:{user:user_id}}).populate('user').exec();
 
         return res.json(bookings);
     }
