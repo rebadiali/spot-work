@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import socketio from 'socket.io-client';
 import api from '../../services/api';
 
-import back from '../../assets/back.png';
 import './styles.css';
 
 export default function Dashboard() {
@@ -56,7 +55,7 @@ export default function Dashboard() {
     };
 
     return (
-        <>
+        <div className="content">
             <ul className="notifications">
                 {requests.map(request => (
                     <li key={request._id}>
@@ -71,25 +70,31 @@ export default function Dashboard() {
 
             <ul className="spot-list">
                 {spots.map(spot => (
-                    <li key={spot._id }>
+                    <li className="mt-3" key={spot._id }>
                         <header style={{ backgroundImage: `url(${spot.thumbnail_url})` }} />
                         <strong>{spot.company}</strong>
                         <span>{spot.price ? `R$${spot.price}/dia` : 'GRATUITO'}</span>
-                        <Link to={`/spot/edit/${spot.id}`}  className='spotbtn'>Editar</Link>
-                        <button className='spotbtn' onClick={() => handleDelete(spot.id)}>Excluir</button>
+                        <div className='d-flex justify-content-end'>
+                            <Link to={`/spot/edit/${spot.id}`}  className='btn btn-outline-info mr-2'>Editar</Link>
+                            <button className='btn btn-outline-danger' onClick={() => handleDelete(spot.id)}>Excluir</button>
+                        </div>
                     </li>
                 ))}
             </ul>
-                    
-            <Link to='/new'>
-                <button className='btn'> Cadastrar novo spot </button>
-            </Link>
 
-            <Link to='/bookings'>
-                <span className='dashbtn'> Verificar reservas </span>
-            </Link>
+            <div className='d-flex'> 
+                <Link to='/bookings'>
+                    <span className='btn btn-light mr-3 larg-btn'> Verificar reservas </span>
+                </Link>
+                        
+                <Link to='/new' className='spotbtn'>
+                    <strong> Cadastrar novo spot </strong>
+                </Link>
+            </div>
 
-            <a href="/"><img src={back} title="Sair" alt="sair" /></a>
-        </>
+            <Link to='/'>
+                <span className='btn btn-outline-secondary mt-3'> Sair </span>
+            </Link>
+        </div>
     ) 
 }

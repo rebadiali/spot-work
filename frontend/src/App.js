@@ -10,10 +10,10 @@ function App() {
   
 
   return (
-    <div className="container">
+    <div className="container-new">
       <img src={logo} alt="Spot Work"/>
 
-      <div className="content">
+      <div className="wrapper d-flex justify-content-center">
         <Routes />
       </div>
     </div>

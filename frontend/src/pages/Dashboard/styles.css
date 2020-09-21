@@ -57,3 +57,31 @@ ul.notifications li button.accept {
 ul.notifications li button.reject {
     color: #E55E5E;
 }
+
+a.spotbtn {
+    border: 0;
+    border-radius: 2px;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    height: 36px;
+    padding: 0 20px;
+    font-size: 16px;
+    font-weight: bold;
+    background: #f05a5b;
+    color: #fff;
+    cursor: pointer;
+  }
+
+a.spotbtn:hover {
+    background: #e14f50;
+    color: #fff;
+    outline: none;
+    text-decoration: none;
+}
+
+.larg-btn {
+    width: 250px;
+}

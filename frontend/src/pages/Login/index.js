@@ -17,7 +17,7 @@ export default function Login({ history }) {
     }
 
     return (
-        <>
+        <div className="content">
             <p>
             Ofereça <strong>spots</strong> para o mercado e encontre <strong>"parceiros"</strong> para a sua empresa.
             </p>
@@ -32,8 +32,8 @@ export default function Login({ history }) {
                 onChange={event => setEmail(event.target.value)}
                 />
 
-                <button className="btn" type="submit">Entrar</button>
+                <button className="btnn" type="submit">Entrar</button>
             </form>
-        </>
+        </div>
     );
 }
