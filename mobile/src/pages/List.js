@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import socketio from 'socket.io-client';
-import { Alert, SafeAreaView, ScrollView, StyleSheet, Image, AsyncStorage, TouchableOpacity, Text } from 'react-native';
+import { Alert, SafeAreaView, View, ScrollView, StyleSheet, Image, AsyncStorage, TouchableOpacity, Text } from 'react-native';
 
 import SpotList from '../components/SpotList';
 
@@ -31,30 +31,36 @@ export default function List({ navigation }) {
         })
     }, []);
 
-    {/*function handleNavigate() {
-        navigation.navigate('Dashboard');
+    function handleLogout(){
+        AsyncStorage.removeItem('user');
+        navigation.navigate('Login');
     };
 
-    function cancelNavigate() {
-        navigation.navigate('Login');
-    };*/}
+    function handleNavigate() {
+        navigation.navigate('MyBookings');
+    };
+
 
     return (
-        <SafeAreaView styles={styles.container}>
-            <Image style={styles.logo} source={logo} />
+        <ScrollView contentInsetAdjustmentBehavior="automatic"> 
+            <SafeAreaView styles={styles.container}>
+                <Image style={styles.logo} source={logo} />
 
-           {/* <TouchableOpacity onPress={() => handleNavigate} style={styles.button}>
-                <Text style={styles.buttonText}>Visualizar reservas solicitadas</Text>
-            </TouchableOpacity> */}
+                
+                    {techs.map(tech => <SpotList key={tech} tech={tech} />)}
+                    <View style={styles.buttonGroup}>
+                        <TouchableOpacity onPress={handleNavigate} style={styles.button}>
+                            <Text style={styles.buttonText}>Visualizar reservas</Text>
+                        </TouchableOpacity>
 
-            <ScrollView>
-                {techs.map(tech => <SpotList key={tech} tech={tech} />)}
-            </ScrollView>
+                        <TouchableOpacity onPress={handleLogout} style={styles.button}>
+                            <Text style={styles.buttonText}>Logout</Text>
+                        </TouchableOpacity>
+                    </View>
+            
 
-            {/* <TouchableOpacity onPress={() => cancelNavigate} style={styles.button}>
-                <Text style={styles.buttonText}>Sair</Text>
-            </TouchableOpacity> */}
-        </SafeAreaView>
+            </SafeAreaView>
+        </ScrollView>
     )
 }
 
@@ -71,18 +77,22 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        height: 32,
-        backgroundColor: '#fc8082',
+        height: 42,
+        backgroundColor: '#6e6e6e',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 2,
-        marginTop: 20,
-        marginHorizontal: 15,
+        width: '40%',
     },
-
+    
     buttonText: {
         color: '#FFF',
         fontWeight: 'bold',
-        fontSize: 15,
+        fontSize: 16,
+    },
+
+    buttonGroup:{
+        flexDirection: 'row',
+        justifyContent: 'space-around',
     },
 });

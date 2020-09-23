@@ -21,7 +21,7 @@ export default function Book({ navigation }) {
         navigation.navigate('List');
     }
 
-    function handleCancel() {
+    function handleNavigate() {
         navigation.navigate('List');
     }
 
@@ -42,9 +42,10 @@ export default function Book({ navigation }) {
                 <Text style={styles.buttonText}>Solicitar reserva</Text>
             </TouchableOpacity>
 
-            {/*<TouchableOpacity onPress={handleCancel} style={[styles.button, styles.cancelButton]}>
-                <Text style={styles.buttonText}>Cancelar</Text>
-            </TouchableOpacity>*/}
+            <TouchableOpacity onPress={handleNavigate} style={styles.buttonBack}>
+                <Text style={styles.buttonText}>Voltar</Text>
+            </TouchableOpacity>
+
         </SafeAreaView>
     )
 };
@@ -85,9 +86,13 @@ const styles = StyleSheet.create({
         borderRadius: 2,
     },
 
-    cancelButton: {
-        backgroundColor: '#ccc',
+    buttonBack: {
         marginTop: 10,
+        height: 42,
+        backgroundColor: '#999',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 2,
     },
 
     buttonText: {
@@ -95,5 +100,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 16,
     },
+
 
 });

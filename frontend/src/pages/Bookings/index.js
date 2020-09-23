@@ -17,7 +17,8 @@ export default function Bookings() {
         async function loadSpots() {
             const user_id = localStorage.getItem('user');
             const response = await api.get('/bookings', {
-                headers: { user_id }
+                headers: { user_id }, 
+                params: { type: 'spot' },
             });
 
             setBookings(response.data);

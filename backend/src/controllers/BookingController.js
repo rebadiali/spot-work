@@ -27,9 +27,16 @@ module.exports = {
 
     async show(req, res){
         const { user_id } = req.headers;
+        const { type } = req.query;
+        let bookings;
 
-        const bookings = await Booking.find().populate({path:'spot',match:{user:user_id}}).populate('user').exec();
+        if(type === 'book'){
+            bookings = await Booking.find().populate({path:'user',match:{_id:user_id}}).populate('spot').exec();
+        } else if(type === 'spot') {
+            bookings = await Booking.find().populate({path:'spot',match:{user:user_id}}).populate('user').exec();
+        }
 
         return res.json(bookings);
-    }
+    },
+
 };

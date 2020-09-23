@@ -37,9 +37,11 @@ function SpotList({ tech, navigation }) {
                 showsVerticalScrollIndicator={false}
                 renderItem={({ item }) => (
                     <View style={styles.listItem}>
-                        <Image style={styles.thumbnail} source={{ uri: item.thumbnail_url.replace("localhost","192.168.0.16") }}/>
+                        <Image style={styles.thumbnail} source={{ uri: item.thumbnail_url.replace("localhost","192.168.15.159") }}/>
                         <Text style={styles.company}>{item.company}</Text>
+                        <Text style={styles.techs}>{ item.address }</Text>
                         <Text style={styles.price}>{item.price ? `R$${item.price}/dia` : 'GRATUITO'}</Text>
+                        <Text style={styles.techs}>{ item.techs.toString() }</Text>
                         <TouchableOpacity onPress={() => handleNavigate(item._id)} style={styles.button}>
                             <Text style={styles.buttonText}>Solicitar reserva</Text>
                         </TouchableOpacity>
@@ -52,7 +54,7 @@ function SpotList({ tech, navigation }) {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 20,
+        paddingVertical: 30,
     },
 
     title: {
@@ -107,6 +109,12 @@ const styles = StyleSheet.create({
         color: '#FFF',
         fontWeight: 'bold',
         fontSize: 15,
+    },
+
+    techs: {
+        fontSize: 15,
+        fontWeight: '100',
+        color: '#999',
     },
 });
 
